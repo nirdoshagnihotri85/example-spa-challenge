@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Jquery Sample";
+}
+<h3>Jquery Sample</h3>
+<div class="panel panel-default" style="margin-top:10px;">
+    <div class="panel-heading">
+        <h3 class="panel-title">Screens</h3>
+    </div>
+    <div class="panel-body">
+        <table id="tblScreen" class="table table-striped" style="margin-top:15px">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        System
+                    </th>
+                    <th>
+                        Title
+
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<div id="pnlField" class="panel panel-default" style="display:none;">
+    <div class="panel-heading">
+        <h3 class="panel-title">Fields</h3>
+    </div>
+    <div class="panel-body">
+        <table id="tblField" class="table" style="margin-top:15px">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Caption</th>
+                    <th>Tooltip</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Scripts/jQuery.tmpl.js"></script>
+    <script type="text/javascript">
+        var screenRowTmpl = '<tr><td><a href="javascript:void(0);" screenid="${ID}" class="screen">${Name}</td><td>${System}</td><td>${Title}</td></tr>';
+        var fieldRowTmpl = '<tr class="${Status}"><td>${Name}</td><td>${Caption}</td><td>${Tooltip}</td></tr>';
+        
+        
+        $(function () {
+            $.get('/api/screen', null, function (data) {
+                $.tmpl(screenRowTmpl, data).appendTo('#tblScreen');
+            });
+        });
+
+
+        $('#tblScreen').on('click', '.screen', function () {
+            fillFiels($(this).attr("screenid"));
+        });
+
+
+        function fillFiels(id) {
+            $.get('/api/screen/', { id: id }, function (data) {
+                $('#tblField tr:gt(0)').remove();
+                $.tmpl(fieldRowTmpl, data.Fields).appendTo('#tblField');
+                $('#pnlField').show();
+            });
+        }
+    </script>
+}

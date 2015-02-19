@@ -1,0 +1,51 @@
+﻿<h3>AngularJs Sample</h3>
+<div class="panel panel-default" style="margin-top:10px;">
+    <div class="panel-heading">
+        <h3 class="panel-title">Screens</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped" style="margin-top:15px">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        System
+                    </th>
+                    <th>
+                        Title
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="screen in screens">
+                    <td>
+                        <a href="javascript:void(0);" class="btn-link" ng-click="fillFields(screen.ID)">{{screen.Name}}</a>
+                    </td>
+                    <td>{{screen.System}}</td>
+                    <td>{{screen.Title}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div ng-if="fields" class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Fields</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table" style="margin-top:15px">
+            <tr>
+                <th>Name</th>
+                <th>Caption</th>
+                <th>Tooltip</th>
+            </tr>
+            <tr ng-repeat="field in fields" ng-class="field.Status">
+                <td>{{field.Name}}</td>
+                <td>{{field.Caption}}</td>
+                <td>{{field.Tooltip}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
